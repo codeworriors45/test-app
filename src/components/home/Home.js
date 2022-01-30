@@ -1,12 +1,11 @@
 import { Box, TextField } from "@mui/material";
 import { ContainerWrapper } from "./Home.style.js";
-import { default as likedeactive } from "../../assets/img/likeDeActive.svg";
-import { default as likeactive } from "../../assets/img/likeActive.svg";
 import Happy from "../../assets/img/happy.png";
 import Neutral from "../../assets/img/neutral.png";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import { useState } from "react";
+import Rating from "../rating/Rating.js";
 
 const initialFormData = {
   bodyLangAndToneRating: 0,
@@ -20,7 +19,6 @@ const initialFormData = {
 
 const Home = () => {
   const [formData, setFormData] = useState(initialFormData);
-  const ratingArray = [1, 2, 3, 4, 5];
 
   const onChangeForm = (event) => {
     const { value, id } = event.target;
@@ -45,30 +43,11 @@ const Home = () => {
             <b className="body-lang-label">Body Language and Tone</b>
             <div className="body-lang-rating">
               <div className="rating-input">
-                {ratingArray.map((item) => {
-                  return (
-                    <img
-                      src={
-                        formData.bodyLangAndToneRating >= item
-                          ? likeactive
-                          : likedeactive
-                      }
-                      onClick={() =>
-                        handleRating(
-                          "bodyLangAndToneRating",
-                          formData.bodyLangAndToneRating >= item
-                            ? item - 1
-                            : item
-                        )
-                      }
-                      className="rating-icon"
-                      alt="likeicon"
-                      key={item}
-                      width="37.52"
-                      height="37.52"
-                    />
-                  );
-                })}
+                <Rating
+                  propertyName="bodyLangAndToneRating"
+                  value={formData.bodyLangAndToneRating}
+                  handleRating={handleRating}
+                />
               </div>
             </div>
             <div className="body-lang-input">
@@ -95,7 +74,9 @@ const Home = () => {
                 max={10}
                 aria-label="Volume"
                 value={formData.reflectingBackRange}
-                onChange={(event, newValue) =>  setFormData({ ...formData, reflectingBackRange: newValue })}
+                onChange={(event, newValue) =>
+                  setFormData({ ...formData, reflectingBackRange: newValue })
+                }
               />
               <img src={Neutral} alt="test" />
             </Stack>
@@ -112,30 +93,11 @@ const Home = () => {
             <b className="exploratory-que-label">Exploratory Questions</b>
             <div className="exploratory-que-rating">
               <div className="rating-input">
-              {ratingArray.map((item) => {
-                  return (
-                    <img
-                      src={
-                        formData.exploratoryQuestionRating >= item
-                          ? likeactive
-                          : likedeactive
-                      }
-                      onClick={() =>
-                        handleRating(
-                          "exploratoryQuestionRating",
-                          formData.exploratoryQuestionRating >= item
-                            ? item - 1
-                            : item
-                        )
-                      }
-                      className="rating-icon"
-                      alt="likeicon"
-                      key={item}
-                      width="37.52"
-                      height="37.52"
-                    />
-                  );
-                })}
+                <Rating
+                  propertyName="exploratoryQuestionRating"
+                  value={formData.exploratoryQuestionRating}
+                  handleRating={handleRating}
+                />
               </div>
             </div>
             <div className="exploratory-que-input">
