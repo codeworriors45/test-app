@@ -123,18 +123,22 @@ export const ContainerWrapper = styled(Container)`
     }
 
     .form-submit {
-      width: 100%;
-      height: 70px;
-      padding: 5px 5px;
-      
+      padding: 10px;
+
       .submit-btn {
-        width: 520px;
+        width: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
-        margin-left: 5px;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
         flex-direction: column;
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
-        padding: 20px 121px;
-        position: absolute;
+        padding: 20px 120px;
         background: #8f8fff;
         border-radius: 8px;
         font-family: Rubik;
@@ -143,10 +147,9 @@ export const ContainerWrapper = styled(Container)`
         font-size: 18px;
         line-height: 20px;
         text-align: center;
-        flex: none;
-        order: 0;
-        flex-grow: 0;
-        margin: 5px 5px;
+        -ms-flex: none;
+        -ms-flex-order: 0;
+        -ms-flex-positive: 0;
       }
     }
   }
