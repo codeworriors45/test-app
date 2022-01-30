@@ -21,6 +21,7 @@ const initialFormData = {
 const Home = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [submitButtonTitle, setSubmitButtonTitle] = useState("Submit");
 
   const onChangeForm = (event) => {
     const { value, id } = event.target;
@@ -32,12 +33,24 @@ const Home = () => {
   };
 
   const handleFormSubmit = async () => {
+    setIsSubmitClicked(true);
+    if (
+      !(
+        formData.bodyLangAndTone &&
+        formData.reflectingBack &&
+        formData.exploratoryQuestion &&
+        formData.additionalComments
+      )
+    ) {
+      return;
+    }
     try {
-      setIsSubmitClicked(true);
       const { data } = await axios.post("feedback", formData);
       if (data.result.data) {
         console.log(data.result.data);
-        setFormData(initialFormData)
+        setFormData(initialFormData);
+        setSubmitButtonTitle("Thank you");
+        setIsSubmitClicked(false);
       }
     } catch (error) {
       console.log(error);
@@ -73,6 +86,12 @@ const Home = () => {
                 rows={2}
                 fullWidth
                 onChange={onChangeForm}
+                helperText={
+                  isSubmitClicked && !formData.bodyLangAndTone
+                    ? "Body Language And Tone Field is required"
+                    : ""
+                }
+                error={isSubmitClicked && !formData.bodyLangAndTone}
               />
             </div>
             <b className="reflecting-back-label">Reflecting Back</b>
@@ -103,6 +122,12 @@ const Home = () => {
                 rows={2}
                 fullWidth
                 onChange={onChangeForm}
+                helperText={
+                  isSubmitClicked && !formData.reflectingBack
+                    ? "Reflecting Back Field is required"
+                    : ""
+                }
+                error={isSubmitClicked && !formData.reflectingBack}
               />
             </div>
             <b className="exploratory-que-label">Exploratory Questions</b>
@@ -123,6 +148,12 @@ const Home = () => {
                 multiline
                 rows={2}
                 fullWidth
+                helperText={
+                  isSubmitClicked && !formData.exploratoryQuestion
+                    ? "Exploratory Questions Field is required"
+                    : ""
+                }
+                error={isSubmitClicked && !formData.exploratoryQuestion}
               />
             </div>
             <b className="additional-comments-label">Additional Comments</b>
@@ -134,13 +165,19 @@ const Home = () => {
                 multiline
                 rows={2}
                 fullWidth
+                helperText={
+                  isSubmitClicked && !formData.additionalComments
+                    ? "Additional Comments Field is required"
+                    : ""
+                }
+                error={isSubmitClicked && !formData.additionalComments}
               />
             </div>
             <div className="form-submit">
               <input
                 type="button"
                 className="submit-btn"
-                value={isSubmitClicked ? "Thank you" : "Submit"}
+                value={submitButtonTitle}
                 onClick={handleFormSubmit}
               />
             </div>
