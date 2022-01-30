@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import { useState } from "react";
 import Rating from "../rating/Rating.js";
+import axios from "axios";
 
 const initialFormData = {
   bodyLangAndToneRating: 0,
@@ -28,6 +29,14 @@ const Home = () => {
   const handleRating = (propertyName, index) => {
     setFormData({ ...formData, [propertyName]: index });
   };
+
+  const handleFormSubmit = async () => {
+    try {
+      const { data } = await axios.post("user", formData);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -122,7 +131,7 @@ const Home = () => {
               />
             </div>
             <div className="form-submit">
-              <input type="button" className="submit-btn" value="Submit" />
+              <input type="button" className="submit-btn" value="Submit" onClick={handleFormSubmit} />
             </div>
           </div>
         </Box>
