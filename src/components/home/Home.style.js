@@ -66,6 +66,10 @@ export const ContainerWrapper = styled(Container)`
         padding: 5px;
         width: 37.48px;
         height: 37.52px;
+
+        .rating-icon {
+          cursor: pointer;
+        }
       }
     }
     .body-lang-input {
@@ -102,6 +106,9 @@ export const ContainerWrapper = styled(Container)`
         padding: 5px;
         width: 37.48px;
         height: 37.52px;
+      }
+      .rating-icon {
+        cursor: pointer;
       }
     }
     .exploratory-que-input {

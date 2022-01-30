@@ -1,18 +1,34 @@
 import { Box, TextField } from "@mui/material";
 import { ContainerWrapper } from "./Home.style.js";
-import { ReactComponent as LikeDeActive } from "../../assets/img/likeDeActive.svg";
-import { ReactComponent as LikeActive } from "../../assets/img/likeActive.svg";
+import { default as likedeactive } from "../../assets/img/likeDeActive.svg";
+import { default as likeactive } from "../../assets/img/likeActive.svg";
 import Happy from "../../assets/img/happy.png";
 import Neutral from "../../assets/img/neutral.png";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import { useState } from "react";
 
-const Home = () => {
-  const [value, setValue] = useState(10);
+const initialFormData = {
+  bodyLangAndToneRating: 0,
+  bodyLangAndTone: "",
+  reflectingBackRange: 0,
+  reflectingBack: "",
+  exploratoryQuestionRating: 0,
+  exploratoryQuestion: "",
+  additionalComments: "",
+};
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+const Home = () => {
+  const [formData, setFormData] = useState(initialFormData);
+  const ratingArray = [1, 2, 3, 4, 5];
+
+  const onChangeForm = (event) => {
+    const { value, id } = event.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleRating = (propertyName, index) => {
+    setFormData({ ...formData, [propertyName]: index });
   };
 
   return (
@@ -29,23 +45,45 @@ const Home = () => {
             <b className="body-lang-label">Body Language and Tone</b>
             <div className="body-lang-rating">
               <div className="rating-input">
-                <LikeActive height="37.52" width="37.48" />
-                <LikeActive height="37.52" width="37.48" />
-                <LikeDeActive height="37.52" width="37.48" />
-                <LikeDeActive height="37.52" width="37.48" />
-                <LikeDeActive height="37.52" width="37.48" />
+                {ratingArray.map((item) => {
+                  return (
+                    <img
+                      src={
+                        formData.bodyLangAndToneRating >= item
+                          ? likeactive
+                          : likedeactive
+                      }
+                      onClick={() =>
+                        handleRating(
+                          "bodyLangAndToneRating",
+                          formData.bodyLangAndToneRating >= item
+                            ? item - 1
+                            : item
+                        )
+                      }
+                      className="rating-icon"
+                      alt="likeicon"
+                      key={item}
+                      width="37.52"
+                      height="37.52"
+                    />
+                  );
+                })}
               </div>
             </div>
             <div className="body-lang-input">
               <TextField
-                style={{ textAlign: "left" }}
+                id="bodyLangAndTone"
+                value={formData.bodyLangAndTone}
                 multiline
                 rows={2}
                 fullWidth
+                onChange={onChangeForm}
               />
             </div>
             <b className="reflecting-back-label">Reflecting Back</b>
             <Stack
+              id="bodyLangAndTone"
               spacing={2}
               direction="row"
               sx={{ mb: 1, mt: 2 }}
@@ -53,33 +91,58 @@ const Home = () => {
             >
               <img src={Happy} alt="test" />
               <Slider
+                min={0}
+                max={10}
                 aria-label="Volume"
-                value={value}
-                onChange={handleChange}
+                value={formData.reflectingBackRange}
+                onChange={(event, newValue) =>  setFormData({ ...formData, reflectingBackRange: newValue })}
               />
               <img src={Neutral} alt="test" />
             </Stack>
             <div className="reflecting-input">
               <TextField
-                style={{ textAlign: "left" }}
+                id="reflectingBack"
+                value={formData.reflectingBack}
                 multiline
                 rows={2}
                 fullWidth
+                onChange={onChangeForm}
               />
             </div>
             <b className="exploratory-que-label">Exploratory Questions</b>
             <div className="exploratory-que-rating">
               <div className="rating-input">
-                <LikeActive height="37.52" width="37.48" />
-                <LikeActive height="37.52" width="37.48" />
-                <LikeDeActive height="37.52" width="37.48" />
-                <LikeDeActive height="37.52" width="37.48" />
-                <LikeDeActive height="37.52" width="37.48" />
+              {ratingArray.map((item) => {
+                  return (
+                    <img
+                      src={
+                        formData.exploratoryQuestionRating >= item
+                          ? likeactive
+                          : likedeactive
+                      }
+                      onClick={() =>
+                        handleRating(
+                          "exploratoryQuestionRating",
+                          formData.exploratoryQuestionRating >= item
+                            ? item - 1
+                            : item
+                        )
+                      }
+                      className="rating-icon"
+                      alt="likeicon"
+                      key={item}
+                      width="37.52"
+                      height="37.52"
+                    />
+                  );
+                })}
               </div>
             </div>
             <div className="exploratory-que-input">
               <TextField
-                style={{ textAlign: "left" }}
+                id="exploratoryQuestion"
+                value={formData.exploratoryQuestion}
+                onChange={onChangeForm}
                 multiline
                 rows={2}
                 fullWidth
@@ -88,7 +151,9 @@ const Home = () => {
             <b className="additional-comments-label">Additional Comments</b>
             <div className="additional-comments-input">
               <TextField
-                style={{ textAlign: "left" }}
+                id="additionalComments"
+                value={formData.additionalComments}
+                onChange={onChangeForm}
                 multiline
                 rows={2}
                 fullWidth
