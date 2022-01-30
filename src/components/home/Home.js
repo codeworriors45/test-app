@@ -20,6 +20,7 @@ const initialFormData = {
 
 const Home = () => {
   const [formData, setFormData] = useState(initialFormData);
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
   const onChangeForm = (event) => {
     const { value, id } = event.target;
@@ -32,11 +33,16 @@ const Home = () => {
 
   const handleFormSubmit = async () => {
     try {
-      const { data } = await axios.post("user", formData);
+      setIsSubmitClicked(true);
+      const { data } = await axios.post("feedback", formData);
+      if (data.result.data) {
+        console.log(data.result.data);
+        setFormData(initialFormData)
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -131,7 +137,12 @@ const Home = () => {
               />
             </div>
             <div className="form-submit">
-              <input type="button" className="submit-btn" value="Submit" onClick={handleFormSubmit} />
+              <input
+                type="button"
+                className="submit-btn"
+                value={isSubmitClicked ? "Thank you" : "Submit"}
+                onClick={handleFormSubmit}
+              />
             </div>
           </div>
         </Box>
