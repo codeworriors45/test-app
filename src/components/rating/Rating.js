@@ -1,6 +1,3 @@
-import { default as likedeactive } from "../../assets/img/likeDeActive.svg";
-import { default as likeactive } from "../../assets/img/likeActive.svg";
-
 const Rating = (props) => {
   const { value, propertyName, handleRating, } = props;
   const ratingArray = [1, 2, 3, 4, 5];
@@ -8,7 +5,7 @@ const Rating = (props) => {
   return ratingArray.map((item) => {
     return (
       <img
-        src={value >= item ? likeactive : likedeactive}
+        src={value >= item ? './images/likeActive.svg' : './images/likeDeActive.svg'}
         onClick={() =>
           handleRating(
             propertyName,

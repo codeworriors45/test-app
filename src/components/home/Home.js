@@ -1,12 +1,11 @@
 import { Box, TextField } from "@mui/material";
 import { ContainerWrapper } from "./Home.style.js";
-import Happy from "../../assets/img/happy.png";
-import Neutral from "../../assets/img/neutral.png";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import { useState } from "react";
 import Rating from "../rating/Rating.js";
 import axios from "axios";
+
 
 const initialFormData = {
   bodyLangAndToneRating: 0,
@@ -102,7 +101,7 @@ const Home = () => {
               sx={{ mb: 1, mt: 2 }}
               alignItems="center"
             >
-              <img src={Happy} alt="test" />
+              <img src="./images/happy.png" alt="test" />
               <Slider
                 min={0}
                 max={10}
@@ -112,7 +111,7 @@ const Home = () => {
                   setFormData({ ...formData, reflectingBackRange: newValue })
                 }
               />
-              <img src={Neutral} alt="test" />
+              <img src="./images/neutral.png" alt="test" />
             </Stack>
             <div className="reflecting-input">
               <TextField
